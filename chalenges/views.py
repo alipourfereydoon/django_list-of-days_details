@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
+from django.template.loader import render_to_string
 
 days = {
     'sunday':'today is sunday',
@@ -19,8 +20,10 @@ def dynamic_days_numbr(request,day):
 
 def dynamic_days(request,day):
     days_date = days.get(day)
-    if days_date is not None:   
-        return HttpResponse(days_date)
+    if days_date is not None:  
+        return render(request , 'chalenges/chalenge.html',context={'day_data':days_date})
+        # response_data = render_to_string('chalenges/chalenge.html') 
+        # return HttpResponse(response_data)
     return HttpResponseNotFound('this page is not exist')
 
 def list_days(request):
